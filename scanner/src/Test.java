@@ -10,7 +10,7 @@ public class Test{
 		/*Scanner sc = new Scanner(System.in);
 		while(sc.hasNextLine())
 			sc4c.scanLine(sc.nextLine(), cnt++);*/
-		String path="C:\\Users\\ThinkPad\\Desktop\\c.txt";
+		String path="E:\\Github\\compile\\scanner\\test.c";
 		try{
 			BufferedReader br = new BufferedReader(new FileReader(new File(path)));
 			String line;
