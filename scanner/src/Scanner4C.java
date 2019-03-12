@@ -1,73 +1,86 @@
-import java.util.HashSet;
+import java.util.*;
+
+import static java.util.Arrays.asList;
 
 class Scanner4C{
-	private HashSet<String> keys;
-	private HashSet<String> ops;
-	private StringBuilder word=new StringBuilder("");
-	private StringBuilder op=new StringBuilder("");
+	private List<String> KEYS;
+	private List<String> OPS;
+	private Deque<List<String>> maps;
+	private StringBuilder word = new StringBuilder("");
+	private StringBuilder op = new StringBuilder("");
 	int cnt;
-	//private HashSet<String> bounds;
 
 	Scanner4C(){
-		keys = new HashSet<String>(){{
-			add("auto");add("break");add("case");add("char");add("const");add("continue");add("default");add("do");add("double");
-			add("else");add("enum");add("extern");add("float");add("for");add("goto");add("if");add("int");add("long");
-			add("register");add("return");add("short");add("signed");add("sizeof");add("static");add("struct");add("switch");add("typedef");
-			add("union");add("unsigned");add("void");add("volatile");add("while");add("inline");add("restrict");add("_Bool");add("_Complex");
-			add("_Imaginary");add("_Alignas");add("_Alignof");add("_Atomic");add("_Strict_assert");add("_Noreturn");add("_Thread_local");add("_Generic");
-		}};
-		ops = new HashSet<String>(){{
-			add("(");add(")");add("[");add("]");add("->");add(".");add("!");add("~");add("++");add("--");add("+");add("-");add("*");add("&");add("/");
-			add("%");add("<<");add(">>");add("<");add("<=");add(">=");add(">");add("==");add("!=");add("^");add("|");add("&&");add("||");add("?");
-			add(":");add("=");add("+=");add("-=");add("*=");add("/=");add("&=");add("^=");add("<<=");add(">>=");add(",");add("{");add("}");
-			add("\"");add("\'");add(";");
-		}};
+		KEYS = asList("auto", "break", "case", "char", "const", "continue", "default", "do", "double",
+				"else", "enum", "extern", "float", "for", "goto", "if", "int", "long",
+				"register", "return", "short", "signed", "sizeof", "static", "struct", "switch", "typedef",
+				"union", "unsigned", "void", "volatile", "while", "inline", "restrict", "_Bool", "_Complex",
+				"_Imaginary", "_Alignas", "_Alignof", "_Atomic", "_Strict_assert", "_Noreturn", "_Thread_local", "_Generic")
+		;
+		OPS = asList(
+				"(", ")", "[", "]", "->", ".", "!", "~", "++", "--", "+", "-", "*", "&", "/",
+				"%", "<<", ">>", "<", "<=", ">=", ">", "==", "!=", "^", "|", "&&", "||", "?",
+				":", "=", "+=", "-=", "*=", "/=", "&=", "^=", "<<=", ">>=", ",", "{", "}",
+				"\"", "\'", ";"
+		);
+		maps = new ArrayDeque<>();
 	}
 
 	void scanLine(String line, int cnt){
 		if(line == null) return;
 		for(int i = 0; i < line.length(); i++){
 			char ch = line.charAt(i);
-			if(Character.isWhitespace(ch)){
-				isWord(cnt);
-				isOp(cnt);
-			}
-			else if(Character.isLetterOrDigit(ch) || ch == '_'){
-				isOp(cnt);
-				word.append( ch);
-			}else
-			{
-				isWord(cnt);
-				isOp(cnt);
+			if(Character.isLetterOrDigit(ch) || '_' == ch){
+				if(! maps.isEmpty())
+					if(0 == i || (Character.isLetterOrDigit(line.charAt(i - 1)) || '_' == line.charAt(i - 1)))
+						word = new StringBuilder(maps.pollLast().get(0));
+				word.append(ch);
+				isWord();
+			}else if(! Character.isWhitespace(ch)){
 				op.append(ch);
+				isOp();
 			}
 		}
+		printAll(cnt);
+		maps.clear();
 	}
 
-	private void isOp(int cnt){
-		if(!op.toString().equals("")){
-			if(ops.contains(op.toString()))
-				System.out.println(op + "\t" + cnt + "\tOP");
-			else
-				System.out.println(op + "\t" + cnt + "\tERROR OP");
-			op=new StringBuilder("");
+	private void printAll(int cnt){
+		for(List<String> al : maps){
+			System.out.println(al.get(0) + "\t" + cnt + "\t" + al.get(1));
 		}
 	}
 
-	private void isWord(int cnt){
-		if(!word.toString().equals("")){
+	private void isOp(){
+		List<String> map = new ArrayList<>();
+		if(! op.toString().equals("")){
+			map.add(op.toString());
+			if(OPS.contains(op.toString()))
+				map.add("OP");
+			else
+				map.add("OP");
+			maps.offer(map);
+			op = new StringBuilder();
+		}
+	}
+
+	private void isWord(){
+		List<String> map = new ArrayList<>();
+		if(! word.toString().equals("")){
+			map.add(word.toString());
 			if(Character.isDigit(word.charAt(0)))
 				try{
-					double d = Double.parseDouble(word.toString());
-					System.out.println(d+"\t"+cnt+"\tDIGIT");
+					Double.parseDouble(word.toString());
+					map.add("DIGIT");
 				}catch(NumberFormatException e){
-					System.out.println(word + "\t" + cnt + "\tERROR WORD");
+					map.add("WRONG WORD");
 				}
-			else if(keys.contains(word.toString()))
-				System.out.println(word + "\t" + cnt + "\tKEY");
+			else if(KEYS.contains(word.toString()))
+				map.add("KEY");
 			else
-				System.out.println(word + "\t" + cnt + "\tWORD");
-			word=new StringBuilder("");
+				map.add("WORD");
+			maps.offer(map);
+			word = new StringBuilder();
 		}
 	}
 }
