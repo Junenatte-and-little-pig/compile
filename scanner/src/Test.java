@@ -1,28 +1,33 @@
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.Scanner;
 
 public class Test{
-	public static void main(String[] args){
+	public static void main( String[] args ){
 		Scanner4C sc4c = new Scanner4C();
 		int cnt = 0;
 		/*Scanner sc = new Scanner(System.in);
 		while(sc.hasNextLine())
 			sc4c.scanLine(sc.nextLine(), cnt++);*/
-		String path="E:\\Github\\compile\\scanner\\test.c";
+		//String path="E:\\Github\\compile\\scanner\\test.c";
+		JFileChooser jfc = new JFileChooser("..");
+		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		jfc.showDialog(new JLabel(), "选择");
 		try{
-			BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+			File f = jfc.getSelectedFile();
+			BufferedReader br = new BufferedReader(new FileReader(f));
 			String line;
-			while(true){
-				line=br.readLine();
-				if(line==null)
+			while( true ){
+				line = br.readLine();
+				if( line == null )
 					break;
-				sc4c.scanLine(line,cnt++);
+				sc4c.scanLine(line, cnt++);
 			}
 			br.close();
-		}catch(Exception e){
-			System.out.println(e.getMessage());
+		}catch( Exception e ){
+			//System.out.println(e.getMessage());
+			JOptionPane.showMessageDialog(new JLabel(), "文件错误！", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		System.exit(0);
 	}

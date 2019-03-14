@@ -6,6 +6,7 @@ import static java.util.Arrays.asList;
 class Scanner4C{
 	private List<String> KEYS;
 	private List<String> OPS;
+	private List<String> TIPS;
 	private Deque<List<String>> words;
 	private StringBuilder word = new StringBuilder();
 	private StringBuilder op = new StringBuilder();
@@ -18,6 +19,12 @@ class Scanner4C{
 				"_Imaginary", "_Alignas", "_Alignof", "_Atomic", "_Strict_assert", "_Noreturn", "_Thread_local", "_Generic")
 		;
 		OPS = asList(
+				"(", ")", "[", "]", "->", ".", "!", "~", "++", "--", "+", "-", "*", "&", "/",
+				"%", "<<", ">>", "<", "<=", ">=", ">", "==", "!=", "^", "|", "&&", "||", "?",
+				":", "=", "+=", "-=", "*=", "/=", "&=", "^=", "<<=", ">>=", ",", "{", "}",
+				"\"", "\'", ";", "#"
+		);
+		TIPS = asList(
 				"(", ")", "[", "]", "->", ".", "!", "~", "++", "--", "+", "-", "*", "&", "/",
 				"%", "<<", ">>", "<", "<=", ">=", ">", "==", "!=", "^", "|", "&&", "||", "?",
 				":", "=", "+=", "-=", "*=", "/=", "&=", "^=", "<<=", ">>=", ",", "{", "}",
@@ -74,14 +81,17 @@ class Scanner4C{
 
 	private void divideOp( int cnt ){
 		List<String> map = new ArrayList<>();
-		for( ; cnt > 0; cnt-- )
-			if( OPS.contains(op.substring(0, cnt)) ){
+		int index = -1;
+		for( ; cnt > 0; cnt-- ){
+			index=OPS.indexOf(op.substring(0,cnt));
+			if( index!=-1 ){
 				map.add(op.substring(0, cnt));
-				map.add("OP");
+				map.add(TIPS.get(index));
 				op = new StringBuilder(op.substring(cnt, op.length()));
 				words.offer(map);
 				return;
 			}
+		}
 	}
 
 
