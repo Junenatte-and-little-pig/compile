@@ -1,4 +1,9 @@
+//this is a c example program
+/*
+preparation
+*/
 #include<stdio.h>
+#include<filesystem>
 #define NUM 25
 int main(){
     int a=1,b;

@@ -12,8 +12,9 @@ public class Test{
 			sc4c.scanLine(sc.nextLine(), cnt++);*/
 		//String path="E:\\Github\\compile\\scanner\\test.c";
 		JFileChooser jfc = new JFileChooser("..");
-		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		jfc.showDialog(new JLabel(), "选择");
+		//jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		jfc.setFileFilter(new CFileFilter());
+		jfc.showDialog(null, "选择");
 		try{
 			File f = jfc.getSelectedFile();
 			BufferedReader br = new BufferedReader(new FileReader(f));
@@ -27,7 +28,7 @@ public class Test{
 			br.close();
 		}catch( Exception e ){
 			//System.out.println(e.getMessage());
-			JOptionPane.showMessageDialog(new JLabel(), "文件错误！", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "文件错误！", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		System.exit(0);
 	}

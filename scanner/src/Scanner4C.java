@@ -22,13 +22,13 @@ class Scanner4C{
 				"(", ")", "[", "]", "->", ".", "!", "~", "++", "--", "+", "-", "*", "&", "/",
 				"%", "<<", ">>", "<", "<=", ">=", ">", "==", "!=", "^", "|", "&&", "||", "?",
 				":", "=", "+=", "-=", "*=", "/=", "&=", "^=", "<<=", ">>=", ",", "{", "}",
-				"\"", "\'", ";", "#"
+				"\"", "\'", ";", "#","//","/*","*/"
 		);
 		TIPS = asList(
-				"(", ")", "[", "]", "->", ".", "!", "~", "++", "--", "+", "-", "*", "&", "/",
-				"%", "<<", ">>", "<", "<=", ">=", ">", "==", "!=", "^", "|", "&&", "||", "?",
-				":", "=", "+=", "-=", "*=", "/=", "&=", "^=", "<<=", ">>=", ",", "{", "}",
-				"\"", "\'", ";", "#"
+				"LSB", "RSB", "LMB", "RMB", "To", "De", "NonOp", "BitnonOp", "DoublePlus", "DoubleMinus", "PlusOp", "MinusOp", "MultiOp", "BitandOp", "DivOp",
+				"MOD", "LS", "RS", "LT", "LE", "GE", "GT", "EQUAL", "UNEQUAL", "XOR", "BitorOp", "AndOp", "OrOp", "QUES",
+				"COLON", "ASSIGN", "PlusAss", "MinusAss", "MultiAss", "DivAss", "AndAss", "XorAss", "LSE", "RSE", "COMMA", "LBB", "RBB",
+				"DoubleQuote", "SingleQuote", "SEMI", "SHARP","EXP","EXPStart","EXPEnd"
 		);
 		words = new ArrayDeque<>();
 	}
@@ -93,7 +93,6 @@ class Scanner4C{
 			}
 		}
 	}
-
 
 	private void isWord(){
 		List<String> map = new ArrayList<>();
