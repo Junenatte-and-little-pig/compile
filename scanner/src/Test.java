@@ -25,6 +25,7 @@ public class Test{
 					break;
 				sc4c.scanLine(line, cnt++);
 			}
+			sc4c.printAll();
 			br.close();
 		}catch( Exception e ){
 			//System.out.println(e.getMessage());
