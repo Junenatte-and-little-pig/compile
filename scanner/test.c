@@ -1,12 +1,20 @@
 //this is a c example program
+#include<stdio.h>
 /*
 preparation
 */
-#include<stdio.h>
 #include<filesystem>
 #define NUM 25
+/*
+error example
+*/
+#define AAA 12fdg;
+#define QW
+qw
 int main(){
     int a=1,b;
+    char* c;
+    float d[10];
     for(int i=0;i<NUM;i++){
         b=i+a;
     }
