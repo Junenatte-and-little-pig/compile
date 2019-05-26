@@ -1,16 +1,8 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
-public class Rule {
+class Rule {
+
     private Map<Character, List<String>> rules;
     private Set<Character> nonTerminal;
     private Set<Character> terminal;
@@ -54,128 +46,155 @@ public class Rule {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (Character c : nonTerminal) {
-            if (!toEmpty.keySet().contains(c))
-                toEmpty.put(c, false);
-            getFirst(c);
-        }
-        for (Character c : nonTerminal)
-            getFollow(c);
+        initFirsts();
+        initFollows();
     }
 
-    void printRules() {
-        for (Character c : nonTerminal)
-            for (String s : rules.get(c))
-                System.out.println(c.toString() + "->" + s);
+    Map<Character, List<String>> getRules() {
+        return rules;
     }
 
-    void printTerminal() {
-        for (Character c : terminal)
-            System.out.println(c);
-    }
-
-    void printToEmpty() {
-        for (Character c : toEmpty.keySet())
-            System.out.println(c + ":\t" + toEmpty.get(c));
-    }
-
-    public Set<Character> getNonTerminal() {
+    Set<Character> getNonTerminal() {
         return nonTerminal;
     }
 
-    public void setNonTerminal(Set<Character> nonTerminal) {
-        this.nonTerminal = nonTerminal;
-    }
-
-    public Set<Character> getTerminal() {
+    Set<Character> getTerminal() {
         return terminal;
     }
 
-    public void setTerminal(Set<Character> terminal) {
-        this.terminal = terminal;
+    Map<Character, Set<Character>> getFirsts() {
+        return firsts;
     }
 
-    void getFirst(char nonT) {
+    Map<Character, Set<Character>> getFollows() {
+        return follows;
+    }
+
+    private int getLength(Map<Character, Set<Character>> map) {
+        int len = 0;
+        for (Character c : map.keySet())
+            len += map.get(c).size();
+        return len;
+    }
+
+    private void getFirst(char nonT) {
         Set<Character> first = new HashSet<>();
         List<String> rule = rules.get(nonT);
-        boolean changed=true;
-        while(changed) {
-            changed=false;
-            int length=getLength(firsts);
-            for (String s : rule) {
-                int i = 0;
-                while (i < s.length()) {
-                    char ch = s.charAt(i);
-                    if (terminal.contains(ch)) {
-                        first.add(ch);
-                        break;
-                    } else if (nonTerminal.contains(ch)) {
-                        if (firsts.keySet().contains(ch))
-                            first.addAll(firsts.get(ch));
-                        break;
-                    } else if ('@' == ch) {
-                        first.add(ch);
-                        i++;
-                    }
+        for (String s : rule) {
+            int i = 0;
+            while (i < s.length()) {
+                char ch = s.charAt(i);
+                if (terminal.contains(ch)) {
+                    first.add(ch);
+                    break;
+                } else if (nonTerminal.contains(ch)) {
+                    if (firsts.keySet().contains(ch))
+                        first.addAll(firsts.get(ch));
+                    break;
+                } else if ('@' == ch) {
+                    first.add(ch);
+                    i++;
                 }
             }
-            if(length<getLength(firsts))
-                changed=true;
         }
         firsts.put(nonT, first);
     }
 
-    public Map<Character, Set<Character>> getFirsts() {
-        return firsts;
+    Set<Character> getFirstByRule(String rule) {
+        Set<Character> first = new HashSet<>();
+        int i = 0;
+        while (true) {
+            Character c = rule.charAt(i);
+            if (nonTerminal.contains(c)) {
+                first.addAll(firsts.get(c));
+                if (toEmpty.get(c))
+                    i++;
+                else
+                    break;
+            } else if (terminal.contains(c)) {
+                first.add(c);
+                break;
+            } else if (c.equals('@')) {
+                break;
+            }
+        }
+        return first;
     }
 
-    public Map<Character, Set<Character>> getFollows() {
-        return follows;
-    }
-
-    public int getLength(Map<Character,Set<Character>> map){
-        int len=0;
-        for(Character c:map.keySet())
-            len+=map.get(c).size();
-        return len;
-    }
-    void getFollow(Character nonT) {
+    private void getFollow(Character nonT) {
         Set<Character> follow = new HashSet<>();
         if ('Z' == nonT)
             follow.add('#');
-        boolean changed = true;
-        while (changed) {
-            changed = false;
-            int length = getLength(follows);
-            for (Character c : nonTerminal)                     //对于每个非终结符
-                for (String s : rules.get(c)) {                 //的每条产生规则
-                    int i = s.indexOf(nonT);                    //查找是否包含要的非终结符
-                    if (i >= 0) {                               //如果包含
-                        i++;                                    //对后续内容进行判断
-                        if (i == s.length())                       //如果后续为空
-                            if (follows.keySet().contains(c))
-                                follow.addAll(follows.get(c));        //将产生式规则左边的非终结符的follow集加进去
-                        while (i < s.length()) {                //如果不为空
-                            char ch = s.charAt(i);
-                            if (terminal.contains(ch)) {       //判断是不是终结符
-                                follow.add(ch);                 //是就加进去
-                                break;
-                            } else if (nonTerminal.contains(ch)) {
-                                if (firsts.keySet().contains(ch)) {
-                                    follow.addAll(firsts.get(ch));
-                                    if (toEmpty.get(ch))
-                                        i++;
-                                    else
-                                        break;
-                                }
+        for (Character c : nonTerminal)                     //对于每个非终结符
+            for (String s : rules.get(c)) {                 //的每条产生规则
+                int i = s.indexOf(nonT);                    //查找是否包含要的非终结符
+                if (i >= 0) {                               //如果包含
+                    i++;                                    //对后续内容进行判断
+                    if (i == s.length())                       //如果后续为空
+                        if (follows.keySet().contains(c))
+                            follow.addAll(follows.get(c));        //将产生式规则左边的非终结符的follow集加进去
+                    while (i < s.length()) {                //如果不为空
+                        char ch = s.charAt(i);
+                        if (terminal.contains(ch)) {       //判断是不是终结符
+                            follow.add(ch);                 //是就加进去
+                            break;
+                        } else if (nonTerminal.contains(ch)) {
+                            if (firsts.keySet().contains(ch)) {
+                                follow.addAll(firsts.get(ch));
+                                if (toEmpty.get(ch)) {
+                                    i++;
+                                    if (i == s.length())
+                                        if (follows.keySet().contains(c))
+                                            follow.addAll(follows.get(c));
+                                } else
+                                    break;
                             }
                         }
                     }
                 }
+            }
+        follow.remove('@');
+        follows.put(nonT, follow);
+    }
+
+    private void initFirsts() {
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            int length = getLength(firsts);
+            for (Character c : nonTerminal) {
+                if (!toEmpty.keySet().contains(c))
+                    toEmpty.put(c, false);
+                getFirst(c);
+            }
+            if (length < getLength(firsts))
+                changed = true;
+        }
+    }
+
+    private void initFollows() {
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            int length = getLength(follows);
+            for (Character c : nonTerminal)
+                getFollow(c);
             if (length < getLength(follows))
                 changed = true;
         }
-        follow.remove('@');
-        follows.put(nonT, follow);
+    }
+
+    void printTable() {
+        for (Character c : nonTerminal) {
+            for (String s : rules.get(c)) {
+                if (s.equals("@"))
+                    for (Character ch : follows.get(c)) {
+                        System.out.println("M[" + c + ", " + ch + "]:" + c + "->" + s);
+                    }
+                for (Character ch : getFirstByRule(s)) {
+                    System.out.println("M[" + c + ", " + ch + "]:" + c + "->" + s);
+                }
+            }
+        }
     }
 }
