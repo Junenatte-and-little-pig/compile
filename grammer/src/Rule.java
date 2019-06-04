@@ -100,7 +100,7 @@ class Rule {
         firsts.put(nonT, first);
     }
 
-    Set<Character> getFirstByRule(String rule) {
+    private Set<Character> getFirstByRule(String rule) {
         Set<Character> first = new HashSet<>();
         int i = 0;
         while (true) {

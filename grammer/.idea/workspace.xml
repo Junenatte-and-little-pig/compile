@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f7febbf2-afc4-421d-a9bb-f46f3add433f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Grammer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Grammer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../operation_precedence/.idea/dictionaries/ThinkPad.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../operation_precedence/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../operation_precedence/src/Operation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../operation_precedence/src/Rule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../operation_precedence/src/rules.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/grammer/Rule.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/grammer/Rule.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scanner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../scanner/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Rule.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="198" column="5" lean-forward="true" selection-start-line="198" selection-start-column="5" selection-end-line="198" selection-end-column="5" />
+            <state relative-caret-position="154">
+              <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#Rule#0;class#Rule#0" />
@@ -38,11 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Grammer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
+            <state relative-caret-position="66">
+              <caret line="3" selection-start-line="3" selection-end-line="21" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -50,7 +57,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rules.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
+            <state relative-caret-position="22">
               <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
             </state>
           </provider>
@@ -183,17 +190,19 @@
       <workItem from="1557193561154" duration="4500000" />
       <workItem from="1557800103012" duration="3287000" />
       <workItem from="1558403888788" duration="3870000" />
+      <workItem from="1559612721154" duration="61000" />
+      <workItem from="1559612838262" duration="1312000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20307000" />
+    <option name="totallyTimeSpent" value="21680000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18759455" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14145234" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -281,24 +290,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/rules.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Grammer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Rule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="198" column="5" lean-forward="true" selection-start-line="198" selection-start-column="5" selection-end-line="198" selection-end-column="5" />
+        <state relative-caret-position="154">
+          <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#Rule#0;class#Rule#0" />
@@ -308,6 +303,20 @@
             <element signature="method#initFirsts#0;class#Rule#0" />
             <element signature="method#initFollows#0;class#Rule#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rules.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Grammer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" selection-start-line="3" selection-end-line="21" selection-end-column="5" />
         </state>
       </provider>
     </entry>
